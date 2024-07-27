@@ -157,14 +157,14 @@ public:
             {{1, 0}, 4}
         };        
         initial_body_positioner(position);        
-        organisms.push_back(*this);
+        organisms.push_back(this);
     }
 
     
     int energy;
     std::vector<int> position;
     std::vector<std::pair<std::vector<int>, int>> body;    
-    static std::vector<Organism> organisms;
+    static std::vector<Organism*> organisms;
 
     void move(std::vector<int> direction_and_turn_array) {
         int max_value = *std::max_element(direction_and_turn_array.begin(), direction_and_turn_array.begin() + 9);
@@ -245,17 +245,18 @@ public:
                     if (world[point_of_attack[0]][point_of_attack[1]] == 6) {
                         break;
                     }
-                    for (Organism organism : organisms) {
-                        if (&organism != this) {
-                            for (auto elem : organism.body) {
-                                if (add_arrays_1d(elem.first, organism.position) == point_of_attack) {
+                    for (Organism* organism : organisms) {
+                        
+                        if (organism != this) {
+                            for (auto elem : organism->body) {
+                                if (add_arrays_1d(elem.first, organism->position) == point_of_attack) {
                                     if (elem.second == 1) {
-                                        for (auto elem_body : organism.body) {
-                                            world[add_arrays_1d(elem_body.first, organism.position)[0]][add_arrays_1d(elem_body.first, organism.position)[1]] = 5;
+                                        for (auto elem_body : organism->body) {
+                                            world[add_arrays_1d(elem_body.first, organism->position)[0]][add_arrays_1d(elem_body.first, organism->position)[1]] = 5;
                                         }
-                                        organism.body.clear();
+                                        organism->body.clear();
                                     } else {
-                                        organism.body.erase(std::remove(organism.body.begin(), organism.body.end(), elem), organism.body.end());
+                                        organism->body.erase(std::remove(organism->body.begin(), organism->body.end(), elem), organism->body.end());
                                     }
                                 }
                             }
@@ -325,7 +326,7 @@ public:
                 int x = new_position[0];
                 int y = new_position[1];
 
-                // Check if the position is within bounds and not part of the organism's body
+                
                 
                 if (world[x][y] != 0 && !inbody) {
                     type_distance.push_back(world[x][y]);
@@ -355,7 +356,7 @@ public:
 };
 
 
-std::vector<Organism> Organism::organisms;
+std::vector<Organism*> Organism::organisms;
 
 
 
@@ -367,38 +368,7 @@ int main(){
         int y = 20 + (std::rand() % 21); 
         world[x][y] = 5;
     }  
-    Organism Ram = Organism({2,2});   
-    Organism Hari = Organism({5,2});
-    Organism Shyam = Organism({2,5});
-    Hari.body.push_back({{0,2},6});
-    body_positioner(Hari.position, Hari.position, Hari.body, Hari.body);
-    Organism Krishna = Organism({5,7});
-    printworld();
-    std::cout<<"--------------------------------------\n";
-    Ram.move({0,0,0,3,1,2,0,1,0,2,0,2});
-    printworld();
-    std::cout<<"--------------------------------------\n";
-    Hari.move({0,0,0,2,0,0,0,0,0,2,0,0});
-    printworld();
-    std::cout<<"--------------------------------------\n";
-    Hari.move({0,0,0,2,0,0,0,0,0,2,0,0});
-    printworld();
-    std::cout<<"--------------------------------------\n";
-    Krishna.move({0,0,0,0,0,0,0,2,0,2,0,0});
-    printworld();
-    std::cout<<"--------------------------------------\n";
-    Krishna.move({0,0,0,2,0,0,0,0,0,2,0,0});
-    Krishna.move({0,0,0,2,0,0,0,0,0,2,0,0});
-    printworld();
-    std::cout<<"--------------------------------------\n";
-    std::cout<<Hari.energy<<"\n";
-    Hari.move({0,0,0,0,0,2,0,0,0,2,0,0});
-    Hari.move({0,0,0,2,0,0,0,0,0,2,0,0});
-    Hari.move({0,0,0,2,0,0,0,0,0,2,0,0});
-    Hari.move({0,2,0,0,0,0,0,0,0,2,0,0});
-    printworld();
-    std::cout<<"--------------------------------------\n";
-    std::cout<<Hari.energy<<"\n";
+    
     
 
 
