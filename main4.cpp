@@ -470,41 +470,6 @@ std::vector<int> get_user_input(SDL_Renderer* renderer, TTF_Font* font) {
 
     return std::vector<int>();
 }
-// void start_game(const std::vector<int>& numbers, SDL_Renderer* renderer) {
-//     std::vector<std::vector<std::vector<int>>> array = map_colors(world);
-//     SDL_SetRenderDrawColor(renderer, BLACK.r, BLACK.g, BLACK.b, 255);
-//     SDL_RenderClear(renderer);
-//     std::cout << "Starting game with numbers: ";
-//     for (int num : numbers) {
-//         std::cout << num << " ";
-//     }
-//     std::cout << std::endl;
-
-//     SDL_Event e;
-//     bool running = true;
-//     while (running) {
-//         while (SDL_PollEvent(&e)) {
-//             if (e.type == SDL_QUIT) {
-//                 running = false;
-//             }
-//         }
-
-//         SDL_SetRenderDrawColor(renderer, BLACK.r, BLACK.g, BLACK.b, 255);
-//         SDL_RenderClear(renderer);
-
-//         // Dummy draw array
-//         for (size_t i = 0; i < array.size(); ++i) {
-//             for (size_t j = 0; j < array[i].size(); ++j) {
-//                 SDL_SetRenderDrawColor(renderer, array[i][j][0], array[i][j][1], array[i][j][2], 255);
-//                 SDL_Rect cell_rect = { static_cast<int>(j * 10), static_cast<int>(i * 10), 10, 10 };
-//                 SDL_RenderFillRect(renderer, &cell_rect);
-//             }
-//         }
-
-//         SDL_RenderPresent(renderer);
-//         SDL_Delay(100);
-//     }
-// }
 
 void draw_array(SDL_Renderer* renderer, std::vector<std::vector<std::vector<int>>> array){
         for (size_t i = 0; i < array.size(); ++i) {
@@ -646,15 +611,6 @@ int main(){
     std::vector<int> numbers2 = get_user_input(renderer, font);
     list_to_evolution_caller2(numbers2);
     start_game(numbers, renderer);
-    // for(int num:numbers){
-    //     std::cout<< num<<std::endl;
-    // }
-    // for(int num:numbers2){
-    //     std::cout<< num<<std::endl;
-    // }
-
-    
-
     TTF_CloseFont(font);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
